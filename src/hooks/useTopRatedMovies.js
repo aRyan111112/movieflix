@@ -15,7 +15,6 @@ function useTopRatedMovies() {
     const json = await data.json();
     dispatch(addTopRatedMovies(json.results));
   };
-
   useEffect(() => {
     !topRatedMovie && topRatedMovies();
   }, []);

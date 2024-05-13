@@ -6,12 +6,12 @@ import useSimilarMovies from "../hooks/useSimilarMovies";
 import MovieList from "./MovieList";
 
 const MovieInfoPageSecondaryContainer = ({ id }) => {
-  const castInfo = useSelector((store) => store.movies?.castInfo);
-  const videos = useSelector((store) => store.movies?.movieVideos);
+  // useFetchCast(id);
+  // useVideos(id);
+  // const castInfo = useSelector((store) => store.movies?.castInfo);
+  // const videos = useSelector((store) => store.movies?.movieVideos);
   const similarMovies = useSelector((store) => store.movies?.similarMovies)
-  useFetchCast(id);
-  useVideos(id);
-  // console.log(castInfo)
+  
   console.log("videos are : ", videos);
 
   useSimilarMovies(id)
@@ -20,7 +20,7 @@ const MovieInfoPageSecondaryContainer = ({ id }) => {
     <>
       <div>
         {/* ----------------Cast-------------- */}
-        <div className="text-white text-3xl my-2 ml-4">Cast</div>
+        {/* <div className="text-white text-3xl my-2 ml-4">Cast</div>
         <div
           className="flex overflow-x-auto scrollbar-hide"
           style={{ scrollbarWidth: "none" }}
@@ -30,7 +30,7 @@ const MovieInfoPageSecondaryContainer = ({ id }) => {
               cast?.profile_path ? (
                 <div key={cast?.id} className="w-44 p-2 text-center">
                   <div className="rounded-md overflow-hidden bg-slate-800">
-                    <img src={IMG_URL + cast?.profile_path} />
+                    <img src={IMG_URL + cast?.profile_path} alt="actor"/>
                     <div className="text-white">{cast?.name}</div>
                     <div className="text-white text-sm">{cast?.character}</div>
                   </div>
@@ -38,10 +38,10 @@ const MovieInfoPageSecondaryContainer = ({ id }) => {
               ) : null
             )}
           </div>
-        </div>
+        </div> */}
 
         {/* ----------------Related Videos-------------- */}
-        <div className="text-white text-3xl my-2 ml-4">Related videos</div>
+        {/* <div className="text-white text-3xl my-2 ml-4">Related videos</div>
         <div className="ml-5">
           <div
             className="flex overflow-x-auto scrollbar-hide gap-5"
@@ -62,7 +62,7 @@ const MovieInfoPageSecondaryContainer = ({ id }) => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* -----------------Similar Movies--------------- */}
         {similarMovies?.length !== 0 ? (<MovieList title="Similar Movies" movies={similarMovies}/>) : null}

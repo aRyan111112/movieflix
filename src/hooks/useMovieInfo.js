@@ -1,18 +1,19 @@
-import { useDispatch } from "react-redux"
-import { useEffect, useState } from "react"
-import { addMovieInfo } from "../utils/moviesSlice"
-import { API_OPTIONS } from "../utils/constants"
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addMovieInfo } from "../utils/moviesSlice";
+import { API_OPTIONS } from "../utils/constants";
 
-const useMovieInfo = async (id) => {
-    const dispatch = useDispatch()
-    
+const useMovieInfo = (id) => {
+    const dispatch = useDispatch();
+
     const fetchMovie = async () => {
-        const data = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, API_OPTIONS)
-        const jsonresult = await data.json()
-        dispatch(addMovieInfo(jsonresult))
+        const data = await fetch("https://api.themoviedb.org/3/movie/"+id, API_OPTIONS);
+        const json = await data.json();
+        dispatch(addMovieInfo(json));
     }
-
-    useEffect(() => { fetchMovie() }, [id])
+    useEffect(() => {
+        fetchMovie();
+    }, [id]);
 }
 
 export default useMovieInfo;

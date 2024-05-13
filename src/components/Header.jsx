@@ -2,14 +2,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LANGUAGE_SUPORTED, LOGO } from "../utils/constants";
-import { toggleGptSearchView } from "../utils/gptSlice";
+import { clearGptSuggestions, toggleGptSearchView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
 import { RxExit } from "react-icons/rx";
 
 const Header = () => {
+  const location = useLocation()
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
@@ -29,7 +30,9 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
-        navigate("/browse");
+        if(window.location.pathname === "/") {
+          navigate("/browse");
+        }
       } else {
         // User is signed out
         dispatch(removeUser());
@@ -53,6 +56,7 @@ const Header = () => {
 
   //handel GPTSearch
   const handelGptSearch = () => {
+    dispatch(clearGptSuggestions())
     //toggle gpt search
     dispatch(toggleGptSearchView());
   };

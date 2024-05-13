@@ -1,13 +1,8 @@
-import useMovieInfo from "../hooks/useMovieInfo";
-import { useSelector } from "react-redux";
 import { IMG_URL, img_URL } from "../utils/constants";
 
 const MovieInfoPageMainContainer = ({info}) => {
-  // const movieInfo = useSelector((store) => store.movies?.movieInfo);
-
-  // useMovieInfo(id);
-
   console.log(info);
+  if(!info) return null
 
   return (
     <>
@@ -48,7 +43,7 @@ const MovieInfoPageMainContainer = ({info}) => {
           </div>
 
           {/* ------------------ Tagline -------------------- */}
-          {info?.tagline && (
+          {(info?.tagline !== "") && (
             <div className="text-white absolute top-[45%] left-[33%] text-xl">Tagline: {info?.tagline}</div>
           )}
           

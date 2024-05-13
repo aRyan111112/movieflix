@@ -1,28 +1,25 @@
-import React from 'react'
 import { useParams } from 'react-router-dom';
 import MovieInfoPageMainContainer from './MovieInfoPageMainContainer'
-import MovieInfoPageSecondaryContainer from './MovieInfoPageSecondaryContainer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useMovieInfo from '../hooks/useMovieInfo';
-import { addMovieInfo } from '../utils/moviesSlice';
-// import Loading from './Loading';
-
+import ShowCast from './ShowCast';
+import ShowRelatedVideos from './ShowRelatedVideos';
+import ShowSimilarMovies from './ShowSimilarMovies';
 
 const MovieInfoPage = () => {
-  const dispatch = useDispatch()
   const { id } = useParams();
   useMovieInfo(id)
   const info = useSelector((store) => store.movies?.movieInfo)
-
-  if(!info) return null
-
+  if (!info) return null
 
   return (
     <>
-    <div className='bg-black pb-10'>
-    <MovieInfoPageMainContainer info={info}/>
-    <MovieInfoPageSecondaryContainer id={info?.id}/>
-    </div>
+      <div className='bg-black'>
+        <MovieInfoPageMainContainer info={info} />
+        <ShowCast id={info?.id} />
+        <ShowRelatedVideos id={info?.id} />
+        <ShowSimilarMovies id={info?.id} />
+      </div>
     </>
   )
 }

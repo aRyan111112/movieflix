@@ -1,25 +1,19 @@
-import { useDispatch } from 'react-redux'
-import { API_OPTIONS } from '../utils/constants'
-import { useEffect, useState } from 'react'
-import { addCastInfo } from '../utils/moviesSlice'
+import { useEffect } from "react";
+import { API_OPTIONS } from "../utils/constants"
+import { useDispatch } from "react-redux";
+import { addCastInfo } from "../utils/moviesSlice";
 
-const useFetchCast =(id) => {
-    const dispatch = useDispatch()
+const useFetchCast = ({id}) => {
+    const dispatch = useDispatch();
 
-    try {
-        useEffect(() => {
-            const fetchingMovieCast = async () => {
-                const data = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`, API_OPTIONS)
-                const jsonresult = await data.json()
-                // console.log(jsonresult)
-                const castresult = jsonresult?.cast
-                dispatch(addCastInfo(castresult))
-          }
-          fetchingMovieCast()
-        }, [id])  
-    } catch (error) {
-        console.log(error.message)
+    const fetchCast = async () => {
+        const data = await fetch("https://api.themoviedb.org/3/movie/"+id+"/credits", API_OPTIONS);
+        const json = await data.json();
+        dispatch(addCastInfo(json.cast));
     }
+    useEffect(() => {
+        fetchCast();
+    },[id])
 }
 
-export default useFetchCast
+export default useFetchCast;

@@ -3,12 +3,12 @@ import { API_OPTIONS } from '../utils/constants';
 import { useEffect } from 'react';
 import { addMovieVideos } from '../utils/moviesSlice';
 
-const useVideos = (movieId) => {
+const useVideos = (id) => {
     const dispatch = useDispatch()
     const getVideos = async () => {
         const data = await fetch(
             "https://api.themoviedb.org/3/movie/" +
-              movieId +
+              id +
               "/videos?language=en-US",
             API_OPTIONS
           );
@@ -18,7 +18,7 @@ const useVideos = (movieId) => {
     }
     useEffect(() => {
         getVideos();
-      }, [movieId]);
+      }, [id]);
 }
 
 export default useVideos;

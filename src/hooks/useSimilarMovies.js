@@ -12,11 +12,9 @@ const useSimilarMovies = (movieId) => {
         const result = json.results;
         dispatch(addSimilarMovies(result))
     }
-
     useEffect(() => {
         fetchSimilarMovies()
     }, [movieId])
-
 }
 
 export default useSimilarMovies
