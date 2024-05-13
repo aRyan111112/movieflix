@@ -4,10 +4,11 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useLocation, useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LANGUAGE_SUPORTED, LOGO } from "../utils/constants";
+import { LANGUAGE_SUPORTED} from "../utils/constants";
 import { clearGptSuggestions, toggleGptSearchView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
 import { RxExit } from "react-icons/rx";
+import logo from "../assets/logo.png"
 
 const Header = () => {
   const location = useLocation()
@@ -66,7 +67,7 @@ const Header = () => {
   return (
     <>
      <div className="flex flex-col justify-between md:flex-row md:justify-between md:w-screen absolute z-20 bg-gradient-to-b from-black">
-      <img className="w-48 py-2 ml-15" src={LOGO} alt="logo" />
+      <img className="py-5 ml-4 w-60" src={logo} alt="logo" />
       <div className="flex md:flex pr-20 gap-4 items-center">
         {user && user.photoURL && (
           <div className=" md:flex gap-10">
