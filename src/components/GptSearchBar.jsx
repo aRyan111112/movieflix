@@ -5,10 +5,11 @@ import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
 import { useState } from "react";
 import runChat from "../utils/gemini";
+import Loading from "./Loading"
 
 function GptSearchBar() {
+  const [loader, setLoader] = useState(false)
   const [prompt, setPrompt] = useState("")
-  const [result, setResult] = useState("")
 
   const langKey = useSelector((store) => store.config?.lang);
   const dispatch = useDispatch();
@@ -23,24 +24,30 @@ function GptSearchBar() {
     const json = await data.json();
     return json.results;
   };
+
   const handleGptSearch = async () => {
-    //   //API call
-    const onsent = async (prompt) => {
-    const response = await runChat(prompt)
-    setResult(response)
+    setLoader(true)
+    //API call
+    try {
+      const response = await runChat("Act as a Movie Recommendation system and suggest me 10 movies from the query:" + prompt + "only give me names of one movie, comma seperated like the result given ahead. Example: Gadar, Sholay, Don, Goalmaal, Krish")
+  
+      console.log("coming from here : ", response)
+      console.log(typeof (response))
+  
+      const gptMovies = response.split(",");
+  
+  
+      const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
+      const tmdbResults = await Promise.all(promiseArray);
+      console.log(tmdbResults);
+      dispatch(
+        addGptMovieResult({ movieNames: gptMovies, movieResults: tmdbResults })
+      );
+    } catch (error) {
+      console.log(error.message)
+    } finally {
+      setLoader(false)
     }
-    onsent("Act as a Movie Recommendation system and suggest me 10 movies from the query:" + prompt + "only give me names of one movie, comma seperated like the result given ahead. Example: Gadar, Sholay, Don, Goalmaal, Krish")
-
-    console.log("coming from here : ", result)
-
-    const gptMovies = result.split(",");
-
-    const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
-    const tmdbResults = await Promise.all(promiseArray);
-    console.log(tmdbResults);
-    dispatch(
-      addGptMovieResult({ movieNames: gptMovies, movieResults: tmdbResults })
-    );
   };
   return (
     <div className="pt-[50%] md:pt-[12%] flex flex-wrap">
@@ -60,8 +67,11 @@ function GptSearchBar() {
           onClick={handleGptSearch}
         >
           {lang[langKey]?.search}
+
         </button>
       </form>
+
+      {loader ? <Loading /> : null}
     </div>
   );
 }
