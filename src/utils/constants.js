@@ -30,6 +30,6 @@ export const LANGUAGE_SUPORTED = [
     name: "Spanish",
   },
 ];
-export const OPENAI_KEY = import.meta.env.VITE_OPENAI_KEY;
+// export const OPENAI_KEY = import.meta.env.VITE_OPENAI_KEY;
 
 export const img_URL = "https://image.tmdb.org/t/p/original"
